@@ -33,34 +33,24 @@ class Profile:
 		else: 
 			new_email = input("Please enter a valid email address: ")
 
-	def prof_disp():
-		pass
-
-	def prof_mod():
-		pass
-
-	def prof_review(self):
-		review = input("Would you like to display or modify your profile? d/m: ")
-		if review == 'm':
-			modify = int(input("To modify your date of birth, enter 1. To modify your email addresses, enter 2. "))
-			if modify == 1:
-				age_calc()
-			elif modify == 2:
-				email_gen()
-			else:
-				modify = int(input("Please enter 1 or 2: "))
-				# How can I return this back to the beginning of the function without creating an infinite loop?
-		elif review == 'd':
-			print(f"""
+	def prof_disp(self):
+		f"""	Here is the information you entered:
+				Name: {self.first_name} {self.last_name}
+				DOB: {self.dob} Age: {self.age}
+				Email: {self.email_pri} {self.email_sec}
 				Thank you for creating your profile.
-				Here is the information you entered:
-				Name: {new_profile.first_name} {new_profile.last_name}
-				DOB: {new_profile.dob} Age: {new_profile.age}
-				Email: {new_profile.email_pri} {new_profile.email_sec}
-				""")
-		else: 
-			input("Please enter y or n: ")
-			# How can I return this back to the beginning of the function without creating an infinite loop?
+
+				"""
+
+	def prof_mod(self):
+		modify = int(input("To modify your date of birth, enter 1. To modify your email addresses, enter 2. "))
+		if modify == 1:
+			self.age_calc()
+		elif modify == 2:
+			self.email_gen()
+		else:
+			self.prof_disp()
+			# I'm having trouble calling these methods from within the class def.
 
 def new_profile():
 	begin = input("Do you want to create a new profile? y/n: ")
@@ -76,16 +66,17 @@ def new_profile():
 
 	if new_profile.legal() == False:
 		print("""
-		You must be 18 or older to create a profile.
-		Go ask your parents.
+		You should be 18 or older to create a profile.
+		Go ask your parents for permission to continue.
 		""")
 		return
 	
 	new_profile.email_gen()
 
-	print("Welcome, {} {}. ".format(new_profile.first_name, new_profile.last_name))
+	print("Welcome, {}. ".format(new_profile.first_name))
 
-	new_profile.prof_review()
-	return
+	new_profile.prof_disp()
+
+	new_profile.prof_mod()
 
 new_profile()
